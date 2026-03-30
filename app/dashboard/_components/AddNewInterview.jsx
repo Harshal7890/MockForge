@@ -14,6 +14,7 @@ import { LoaderCircle } from "lucide-react";
 import React, { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import SpotlightWrapper from "@/components/SpotlightWrapper";
 
 function AddNewInterview() {
   const { user } = useUser();
@@ -26,8 +27,6 @@ function AddNewInterview() {
   const [jsonResponse, setJsonResponse] = useState([]);
 
   const router = useRouter();
-
-  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -51,8 +50,8 @@ function AddNewInterview() {
       }
 
       const data = await res.json();
-      
-       router.push(`/dashboard/interview/${data.mockId}/page.jsx`);
+
+      router.push(`/dashboard/interview/${data.mockId}/page.jsx`);
       console.log("Saved mockId:", data.mockId);
       console.log("Questions:", data.questions);
 
@@ -68,12 +67,14 @@ function AddNewInterview() {
 
   return (
     <div>
-      <div
-        className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-md cursor-pointer transition-all"
+     <SpotlightWrapper>
+       <div
+          className="border-white"
         onClick={() => setOpenDialog(true)}
       >
-        <h2 className="font-bold text-lg text-center">+ Add new</h2>
+        <h2 className="font-bold text-white text-center">+ Add new</h2>
       </div>
+     </SpotlightWrapper>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="max-w-2xl">

@@ -1,18 +1,11 @@
-import React from 'react'
-import Header from './_components/Header'
 import { Toaster } from "sonner";
+import DashboardSidebar from "@/components/DashboardSidebar";
 
-
-function DashboardLayout({children}) {
+export default function DashboardLayout({ children }) {
   return (
-    <div>
-        <Header/>
-      <div className='mx-5 md:mx-20 lg:mx-36'>
-        {children}
-        <Toaster richColors position="bottom-right" />
-      </div>
-    </div>
-  )
+    <DashboardSidebar>
+      {children}
+      <Toaster richColors position="bottom-right" />
+    </DashboardSidebar>
+  );
 }
-
-export default DashboardLayout
