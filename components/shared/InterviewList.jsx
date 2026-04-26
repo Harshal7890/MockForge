@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import SpotlightWrapper from "@/components/animations/SpotlightWrapper";
-import { Trash2, LoaderCircle } from "lucide-react";
+import { Trash2, LoaderCircle, Clock, Briefcase, CalendarDays, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { getInterviewList, deleteMockInterview } from "@/lib/actions/interview";
 
@@ -51,77 +50,76 @@ export default function InterviewList() {
   };
 
   return (
-    <div className="mt-10">
-      <h2 className="font-semibold text-xl text-neutral-200 mb-4">
-        Previous Mock Interviews
-      </h2>
+    <div className="mt-12">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100/50 text-blue-600 shadow-sm ring-1 ring-blue-100">
+          <Clock size={20} />
+        </div>
+        <h2 className="text-xl font-bold text-slate-800">
+          Previous Mock Interviews
+        </h2>
+      </div>
 
       {loading ? (
-        <div className="flex justify-center items-center py-10">
-          <LoaderCircle className="animate-spin text-primary" />
+        <div className="flex justify-center items-center py-20">
+          <LoaderCircle className="animate-spin text-blue-500" size={32} />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {interviewList.length > 0 ? (
             interviewList.map((item) => (
-              <SpotlightWrapper key={item.mockId}>
-                <div
-                  className="
-                    bg-neutral-900/80
-                    backdrop-blur-sm
-                    border border-neutral-800
-                    rounded-xl
-                    p-5
-                    transition-all duration-300
-                    hover:border-purple-500/40
-                    shadow-md hover:shadow-purple-500/10
-                    relative group
-                  "
+              <div
+                key={item.mockId}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white border border-slate-200 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-200"
+              >
+                {/* Background Decor */}
+                <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-slate-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                
+                <button 
+                  onClick={() => onDeleteInterview(item.mockId)}
+                  className="absolute right-4 top-4 rounded-full bg-red-50 p-2 text-red-400 opacity-0 transition-all hover:bg-red-100 hover:text-red-600 group-hover:opacity-100 z-10"
+                  title="Delete Interview"
                 >
-                  <button 
-                    onClick={() => onDeleteInterview(item.mockId)}
-                    className="absolute top-4 right-4 p-2 text-neutral-500 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 z-10"
-                    title="Delete Interview"
-                  >
-                    <Trash2 size={18} />
-                  </button>
+                  <Trash2 size={16} />
+                </button>
 
+                <div className="relative z-10">
                   {/* Job Title */}
-                  <p className="font-semibold text-neutral-100 text-lg pr-8">
+                  <h3 className="pr-8 text-[19px] font-bold text-slate-800 line-clamp-1">
                     {item.jobPosition}
-                  </p>
+                  </h3>
+                  
+                  {/* Experience */}
+                  <div className="mt-2 flex items-center gap-2 text-xs font-medium text-slate-500">
+                    <Briefcase size={14} className="text-slate-400" />
+                    <span>{item.jobExperiance} Years Experience</span>
+                  </div>
 
                   {/* Description */}
-                  <p className="text-sm text-neutral-300 mt-1">
+                  <p className="mt-3 text-sm text-slate-500 line-clamp-2 leading-relaxed">
                     {item.jobDesc}
                   </p>
+                </div>
 
-                  {/* Experience */}
-                  <p className="text-sm text-neutral-400 mt-2">
-                    Years of experience: {item.jobExperiance}
-                  </p>
-
-                  {/* Date */}
-                  <p className="text-xs text-neutral-500 mt-1">
-                    Created at: {new Date(item.createdAt).toLocaleString()}
-                  </p>
+                <div className="relative z-10 mt-6 border-t border-slate-100 pt-5">
+                  <div className="mb-4 flex items-center gap-2 text-[11px] font-medium text-slate-400">
+                    <CalendarDays size={13} />
+                    <span>{new Date(item.createdAt).toLocaleDateString(undefined, {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}</span>
+                  </div>
 
                   {/* Buttons */}
-                  <div className="flex justify-between mt-5">
+                  <div className="flex items-center gap-3">
                     <Link
                       href={`/dashboard/interview/${item.mockId}/feedback`}
+                      className="flex-1"
                     >
                       <Button
-                        size="sm"
                         variant="outline"
-                        className="
-                          border-neutral-700
-                          text-neutral-300
-                          bg-neutral-900/40
-                          hover:bg-neutral-800
-                          hover:text-neutral-100
-                          transition-all
-                        "
+                        className="w-full bg-white text-slate-700 hover:bg-slate-50 hover:text-blue-600 border-slate-200 shadow-sm transition-all"
                       >
                         Feedback
                       </Button>
@@ -129,29 +127,26 @@ export default function InterviewList() {
 
                     <Link
                       href={`/dashboard/interview/${item.mockId}/start`}
+                      className="flex-1"
                     >
                       <Button
-                        size="sm"
-                        className="
-                          bg-[#5227FF]
-                          hover:bg-[#6b46ff]
-                          text-neutral-100
-                          shadow-lg
-                          hover:shadow-purple-500/20
-                          transition-all
-                        "
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all gap-2"
                       >
-                        Start
+                        Start <ArrowRight size={14} />
                       </Button>
                     </Link>
                   </div>
                 </div>
-              </SpotlightWrapper>
+              </div>
             ))
           ) : (
-            <p className="col-span-full text-center py-10 text-neutral-500 border rounded-lg border-dashed border-neutral-800">
-              No mock interviews found. Add one to get started!
-            </p>
+            <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-16 text-center">
+               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-500">
+                 <Briefcase size={24} />
+               </div>
+               <h3 className="text-lg font-semibold text-slate-800">No mock interviews yet</h3>
+               <p className="mt-1 text-sm text-slate-500 max-w-sm">Create your first AI mock interview to start practicing and tracking your progress.</p>
+            </div>
           )}
         </div>
       )}

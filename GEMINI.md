@@ -5,7 +5,7 @@
 
 ## Tech Stack
 - **Framework:** [Next.js 16+](https://nextjs.org/) (App Router, React 19)
-- **AI Engine:** [Google Generative AI (Gemini)](https://ai.google.dev/) (`gemini-1.5-flash`)
+- **AI Engine:** [Google Generative AI (Gemini)](https://ai.google.dev/) (`gemini-2.5-flash`)
 - **Database:** [Neon](https://neon.tech/) (Serverless PostgreSQL)
 - **ORM:** [Drizzle ORM](https://orm.drizzle.team/)
 - **Authentication:** [Clerk](https://clerk.com/)

@@ -24,12 +24,12 @@ function Navbar() {
         socialItems={socialItems}
         displaySocials
         displayItemNumbering={true}
-        menuButtonColor="#ffffff"
-        openMenuButtonColor="#fff"
+        menuButtonColor="#0f172a"
+        openMenuButtonColor="#0f172a"
         changeMenuColorOnOpen={true}
-        colors={["#0a0a0a", "#111111"]}
+        colors={["#f8fafc", "#f1f5f9"]}
         logoUrl="/path-to-your-logo.svg"
-        accentColor="#ffffff"
+        accentColor="#3b82f6"
         onMenuOpen={() => console.log("Menu opened")}
         onMenuClose={() => console.log("Menu closed")}
       />

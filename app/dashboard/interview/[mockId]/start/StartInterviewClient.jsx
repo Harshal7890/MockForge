@@ -36,7 +36,7 @@ export default function StartInterviewClient({ interview, user }) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-4 md:p-8">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 p-4 md:p-8">
       {/* LEFT - QUESTIONS */}
       <QuestionsSection
         questions={mockInterviewQuestions}
@@ -45,13 +45,26 @@ export default function StartInterviewClient({ interview, user }) {
       />
 
       {/* RIGHT - RECORDING & NAV */}
-      <div className="border border-white/10 bg-[#0a0a0a]/50 backdrop-blur-md rounded-xl p-6 shadow-2xl flex flex-col">
-        <h1 className="text-xl font-bold mb-2 text-white">Interview Started</h1>
-        <p className="mb-6 text-neutral-300">
-          <strong className="text-white font-medium">Position:</strong> {interviewData?.jobPosition}
-        </p>
+      <div className="rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/40 p-6 md:p-8 flex flex-col relative overflow-hidden">
+        
+        {/* Subtle background glow */}
+        <div className="absolute top-0 right-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-blue-50/50 blur-3xl pointer-events-none" />
 
-        <div className="flex-1">
+        {/* Section Header */}
+        <div className="relative z-10 mb-6 border-b border-slate-100 pb-4">
+           <div className="flex items-center gap-3 mb-1.5">
+              <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 shadow-sm"></span>
+              </span>
+              <h1 className="text-xl font-bold text-slate-800 tracking-tight">Active Interview</h1>
+           </div>
+           <p className="text-sm text-slate-500 flex items-center gap-2">
+              <span className="font-semibold text-slate-700">Role:</span> {interviewData?.jobPosition}
+           </p>
+        </div>
+
+        <div className="flex-1 relative z-10 min-h-[400px]">
           <RecordAnsSection
             mockId={interviewData?.mockId}
             activeQuestion={activeQuestion}
@@ -60,37 +73,42 @@ export default function StartInterviewClient({ interview, user }) {
         </div>
 
         {/* Dynamic Navigation Buttons */}
-        <div className="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-white/10">
-          {activeIndex > 0 && (
-            <Button
-              onClick={() => setActiveIndex(activeIndex - 1)}
-              variant="outline"
-              className="border-white/10 text-neutral-300 bg-transparent hover:bg-white/5 hover:text-white"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Button>
-          )}
+        <div className="relative z-10 flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
+          
+          <div className="flex-shrink-0">
+            {activeIndex > 0 && (
+              <Button
+                onClick={() => setActiveIndex(activeIndex - 1)}
+                variant="outline"
+                className="border-slate-200 text-slate-600 bg-white hover:bg-slate-50 hover:text-blue-600 rounded-xl transition-all shadow-sm"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous
+              </Button>
+            )}
+          </div>
 
-          {activeIndex < mockInterviewQuestions.length - 1 && (
-            <Button
-              onClick={() => setActiveIndex(activeIndex + 1)}
-              className="bg-[#ececec] text-[#050505] hover:bg-white"
-            >
-              Next Question
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          )}
+          <div className="flex gap-3">
+            {activeIndex < mockInterviewQuestions.length - 1 && (
+              <Button
+                onClick={() => setActiveIndex(activeIndex + 1)}
+                className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20 rounded-xl px-6 transition-all"
+              >
+                Next Question
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            )}
 
-          {isLastQuestion && (
-            <Button
-              onClick={handleFinishInterview}
-              className="bg-green-600 hover:bg-green-500 text-white shadow-[0_0_15px_rgba(22,163,74,0.4)]"
-            >
-              Finish Interview
-              <CheckCircle className="w-4 h-4 ml-2" />
-            </Button>
-          )}
+            {isLastQuestion && (
+              <Button
+                onClick={handleFinishInterview}
+                className="bg-green-600 hover:bg-green-700 text-white shadow-md shadow-green-500/20 rounded-xl px-6 transition-all group"
+              >
+                Finish Interview
+                <CheckCircle className="w-4 h-4 ml-2 transition-transform group-hover:scale-110" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>
