@@ -9,6 +9,7 @@ import {
   IconUserBolt,
   IconBriefcase,
   IconBook,
+  IconCompass,
 } from "@tabler/icons-react";
 
 import { UserButton, useUser } from "@clerk/nextjs";
@@ -38,6 +39,11 @@ export default function DashboardSidebar({ children }) {
       label: "Aptitude Tests",
       href: "/dashboard/aptitude",
       icon: <IconBook className="h-5 w-5 text-slate-500" />,
+    },
+    {
+      label: "Roadmaps",
+      href: "/dashboard/roadmaps",
+      icon: <IconCompass className="h-5 w-5 text-slate-500" />,
     },
     {
       label: "Company Specific DSA",
